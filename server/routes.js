@@ -23,6 +23,28 @@ const getSimilar = (req, res) => {
     })
 }
 
+const reviews = (req, res) => {
+  axios.get('http://localhost:3004/reviews')
+    .then((result) => {
+      let { data } = result;
+      res.send(data);
+    })
+    .catch((err) => {
+      res.send(err);
+    })
+}
+
+const features = (req, res) => {
+  axios.get('http://localhost:3004/features')
+    .then((result) => {
+      let { data } = result;
+      res.send(data);
+    })
+    .catch((err) => {
+      res.send(err);
+    })
+}
+
 const getReviews = (req, res) => {
   axios.get('http://localhost:3004/1')
     .then((result) => {
@@ -46,5 +68,5 @@ const getCalculator = (req, res) => {
 }
 
 module.exports = {
-  getGallery, getSimilar, getReviews, getCalculator
+  getGallery, getSimilar, getReviews, getCalculator, reviews, features
 }

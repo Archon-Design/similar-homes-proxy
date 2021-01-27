@@ -3,16 +3,37 @@ const path = require('path');
 const cors = require('cors');
 const routes = require('./routes.js');
 
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
 const app = express();
 
 app.use(express.static(path.join(__dirname, '../client', 'dist')));
 app.use(cors());
 app.use(express.json());
 
-app.get('/api/gallery', routes.getGallery);
-app.get('/api/similar', routes.getSimilar);
-app.get('/api/reviews', routes.getReviews);
-app.get('/api/calculator', routes.getCalculator);
+
+//Gallery
+app.use('/api/homeinfo', createProxyMiddleware({ target: 'http://localhost:3002', changeOrigin: true }));
+app.use('/api/homeimages', createProxyMiddleware({ target: 'http://localhost:3002', changeOrigin: true }));
+
+//Similar Carousel
+app.use('/api/homes/similar', createProxyMiddleware({ target: 'http://localhost:3001', changeOrigin: true }));
+app.use('/api/homes/nearby', createProxyMiddleware({ target: 'http://localhost:3001', changeOrigin: true }));
+
+//Local Review
+app.use('/reviews', createProxyMiddleware({ target: 'http://localhost:3004', changeOrigin: true }));
+app.use('/features', createProxyMiddleware({ target: 'http://localhost:3004', changeOrigin: true }));
+
+//Calculator
+app.use('/mortgages', createProxyMiddleware({ target: 'http://localhost:3003', changeOrigin: true }));
+app.use('/homes', createProxyMiddleware({ target: 'http://localhost:3003', changeOrigin: true }));
+
+// app.get('/api/gallery', routes.getGallery);
+// app.get('/api/similar', routes.getSimilar);
+// app.get('/api/reviews', routes.getReviews);
+// app.get('/reviews', routes.reviews);
+// app.get('/features', routes.features);
+// app.get('/api/calculator', routes.getCalculator);
 
 
 app.listen(3000, () => {console.log('Proxy listening on Port 3000'); });

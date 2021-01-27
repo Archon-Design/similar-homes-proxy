@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const routes = require('./routes.js');
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
@@ -10,7 +9,6 @@ const app = express();
 app.use(express.static(path.join(__dirname, '../client', 'dist')));
 app.use(cors());
 app.use(express.json());
-
 
 //Gallery
 app.use('/api/homeinfo', createProxyMiddleware({ target: 'http://localhost:3002', changeOrigin: true }));
@@ -27,13 +25,5 @@ app.use('/features', createProxyMiddleware({ target: 'http://localhost:3004', ch
 //Calculator
 app.use('/mortgages', createProxyMiddleware({ target: 'http://localhost:3003', changeOrigin: true }));
 app.use('/homes', createProxyMiddleware({ target: 'http://localhost:3003', changeOrigin: true }));
-
-// app.get('/api/gallery', routes.getGallery);
-// app.get('/api/similar', routes.getSimilar);
-// app.get('/api/reviews', routes.getReviews);
-// app.get('/reviews', routes.reviews);
-// app.get('/features', routes.features);
-// app.get('/api/calculator', routes.getCalculator);
-
 
 app.listen(3000, () => {console.log('Proxy listening on Port 3000'); });

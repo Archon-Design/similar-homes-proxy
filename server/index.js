@@ -15,8 +15,8 @@ app.use('/api/homeinfo', createProxyMiddleware({ target: 'http://ec2-3-141-9-216
 app.use('/api/homeimages', createProxyMiddleware({ target: 'http://ec2-3-141-9-216.us-east-2.compute.amazonaws.com:3002', changeOrigin: true }));
 
 //Similar Carousel
-app.use('/api/homes/similar', createProxyMiddleware({ target: 'http://ec2-54-67-71-60.us-west-1.compute.amazonaws.com:3001', changeOrigin: true }));
-app.use('/api/homes/nearby', createProxyMiddleware({ target: 'http://ec2-54-67-71-60.us-west-1.compute.amazonaws.com:3001', changeOrigin: true }));
+app.use('/api/homes/similar/:id', createProxyMiddleware({ target: 'http://ec2-54-67-71-60.us-west-1.compute.amazonaws.com:3001/:id', changeOrigin: true }));
+app.use('/api/homes/nearby/:id', createProxyMiddleware({ target: 'http://ec2-54-67-71-60.us-west-1.compute.amazonaws.com:3001/:id', changeOrigin: true }));
 
 //Local Review
 app.use('/reviews', createProxyMiddleware({ target: 'http://ec2-13-52-76-182.us-west-1.compute.amazonaws.com:3004', changeOrigin: true }));
